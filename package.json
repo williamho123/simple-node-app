@@ -1,0 +1,23 @@
+{
+  "name": "simple-node-app",
+  "version": "1.0.0",
+  "description": "Simple NodeJS app with a REST endpoint",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williamho123/simple-node-app.git"
+  },
+  "author": "williamho123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/williamho123/simple-node-app/issues"
+  },
+  "homepage": "https://github.com/williamho123/simple-node-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
