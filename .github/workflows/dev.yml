@@ -38,7 +38,7 @@ jobs:
         run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
   deploy:
-    needs: build
+    needs: build-and-push
 
     name: Deploy
     runs-on: ubuntu-latest
