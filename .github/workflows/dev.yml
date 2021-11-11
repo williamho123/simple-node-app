@@ -59,4 +59,5 @@ jobs:
             --create-namespace \
             -n ${{ env.ENVIRONMENT }} \
             -f dev.values.yml \
-            --set image.tag=${{ env.IMAGE_TAG }}
+            --set image.tag=${{ env.IMAGE_TAG }} \
+            --wait
