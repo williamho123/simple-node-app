@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feature-**
+    paths-ignore:
+      - 'README.md'
+
 
 env:
   REGISTRY: ghcr.io
@@ -77,7 +80,7 @@ jobs:
 
     steps:
       - name: nslookup
-        timeout-minutes: 1
+        timeout-minutes: 10
         run: |
           set +e
 
