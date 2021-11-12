@@ -11,7 +11,7 @@ env:
   REGISTRY: ghcr.io
   ENVIRONMENT: nonprod
   IMAGE_NAME: ${{ github.repository }}
-  # IMAGE_TAG: ${{ github.ref_name }}
+  IMAGE_TAG: ${{ github.ref_name }}-$(git rev-parse --short $GITHUB_SHA)
   RELEASE: simple-node-app
 
 jobs:
@@ -26,8 +26,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set image tag in environment
-        run: echo "IMAGE_TAG=${{ github.ref_name }}-$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
+      # - name: Set image tag in environment
+      #   run: echo "IMAGE_TAG=${{ github.ref_name }}-$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
 
       - name: Log in to the container registry
         uses: docker/login-action@v1
