@@ -73,18 +73,20 @@ jobs:
 
     name: Verify app
     runs-on: ubuntu-latest
-    container: "radial/busyboxplus:curl"
+    container: "curlimages/curl:7.80.0"
 
     steps:
       - name: nslookup
         timeout-minutes: 1
         run: |
-          ip=$(dig +short ${{ needs.deploy.outputs.app_url }}-a)
+          set +e
 
-          while [ -z $ip ]
+          nslookup ${{ needs.deploy.outputs.app_url }}-a
+
+          while [ $? -ne 0 ]
           do
             sleep 30
-            ip=$(dig +short ${{ needs.deploy.outputs.app_url }}-a)
+            nslookup ${{ needs.deploy.outputs.app_url }}-a
           done
 
       - name: curl
