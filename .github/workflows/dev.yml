@@ -79,14 +79,12 @@ jobs:
       - name: nslookup
         timeout-minutes: 1
         run: |
-          set +e
+          ip=$(dig +short ${{ needs.deploy.outputs.app_url }}-a)
 
-          nslookup ${{ needs.deploy.outputs.app_url }}-a
-
-          while [ $? -ne 0 ]
+          while [ -z $ip ]
           do
             sleep 30
-            nslookup ${{ needs.deploy.outputs.app_url }}
+            ip=$(dig +short ${{ needs.deploy.outputs.app_url }}-a)
           done
 
       - name: curl
