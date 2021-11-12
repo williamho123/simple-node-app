@@ -77,11 +77,17 @@ jobs:
 
     steps:
       - name: nslookup
+        timeout-minutes: 1
         run: |
           set +e
+
           nslookup ${{ needs.deploy.outputs.app_url }}-a
 
-          echo $?
+          while [ $? -ne 0 ]
+          do
+            sleep 30
+            nslookup ${{ needs.deploy.outputs.app_url }}
+          done
 
       - name: curl
         run: curl ${{ needs.deploy.outputs.app_url }}
