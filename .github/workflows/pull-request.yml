@@ -1,0 +1,54 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+
+env:
+  REGISTRY: ghcr.io
+  ENVIRONMENT: nonprod
+  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_TAG: ${{ github.head_ref }}
+  RELEASE: simple-node-app
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --tag ${{env.REGISTRY}}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+  deploy-dry-run:
+    needs: build
+
+    name: Deploy dry run
+    runs-on: ubuntu-latest
+    container: "alpine/helm:3.7.1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set kubeconfig
+        run: mkdir ~/.kube && echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
+      - name: Helm dry run
+        working-directory: helm
+        run: |
+          helm upgrade ${{ env.RELEASE }} ./chart \
+            --install \
+            --create-namespace \
+            --dry-run \
+            -n ${{ env.ENVIRONMENT }} \
+            -f staging.values.yml \
+            --set image.tag=${{ env.IMAGE_TAG }}

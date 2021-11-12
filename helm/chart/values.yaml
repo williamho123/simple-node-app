@@ -37,7 +37,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
   hosts:
-    - host: '{{ .Values.environment }}.{{ include "simple-node-app.name" . }}.57ee45caccaf4ada8d5d.eastus.aksapp.io'
+    - host: '{{ .Values.environment }}.{{ include "simple-node-app.fullname" . }}.57ee45caccaf4ada8d5d.eastus.aksapp.io'
       paths:
         - path: /
           pathType: Prefix

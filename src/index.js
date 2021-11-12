@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 80
 app.get('/', (req, res) => {
   console.log(`Request received ${new Date().toISOString()}`)
   res.json({
-    "message"  : "Automate all the things!",
+    "message"  : "Automate eveything 2!",
     "timestamp": Date.now()
   })
 })
