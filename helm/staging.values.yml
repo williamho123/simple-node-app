@@ -1,4 +1,4 @@
-environment: uat
+environment: staging
 resources:
   requests:
     cpu: 100m
