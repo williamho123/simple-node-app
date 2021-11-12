@@ -78,7 +78,10 @@ jobs:
     steps:
       - name: nslookup
         run: |
+          set +e
           nslookup ${{ needs.deploy.outputs.app_url }}-a
+
+          echo $?
 
       - name: curl
         run: curl ${{ needs.deploy.outputs.app_url }}
